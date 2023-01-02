@@ -2,6 +2,7 @@
 
 namespace JOOservices\XClient;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\MessageFormatter;
@@ -10,10 +11,10 @@ use JOOservices\XClient\Interfaces\ClientInterface;
 use JOOservices\XClient\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class Client implements ClientInterface
+class XClient implements ClientInterface
 {
 
-    protected \GuzzleHttp\Client $client;
+    protected Client $client;
     protected ResponseInterface $response;
     protected Factory $factory;
     protected array $headers;
@@ -47,7 +48,6 @@ class Client implements ClientInterface
     {
         $this->setOptions($options);
         $this->setRequestOptions($requestOptions);
-
 
         $this->factory = new Factory($options['isFake'] ?? null);
         $this->factory
