@@ -1,0 +1,38 @@
+{
+  "name": "jooservices/xcrawler-client",
+  "description": "Wrapper for Guzzle HTTP Client",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "JOOservices\\XClient\\": "src/",
+      "JOOservices\\XClient\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^8.1",
+    "guzzlehttp/guzzle": "^7.",
+    "fakerphp/faker": "^1.21",
+    "psr/log": "^3.0",
+    "symfony/dom-crawler": "^6.2"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7",
+    "friendsofphp/php-cs-fixer": "*",
+    "phpmd/phpmd": "^2.13",
+    "phpstan/phpstan": "^1.9",
+    "phpunit/phpunit": "^9.5.10",
+    "mockery/mockery": "^1.4"
+  },
+  "scripts": {
+    "lint": [
+      "@php vendor/bin/phpstan analyze --level=0 src"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Viet Vu",
+      "email": "jooservices@gmail.com"
+    }
+  ]
+}
