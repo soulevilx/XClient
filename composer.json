@@ -1,5 +1,5 @@
 {
-  "name": "jooservices/XClient",
+  "name": "jooservices/xclient",
   "description": "Wrapper for Guzzle HTTP Client",
   "type": "library",
   "license": "MIT",
