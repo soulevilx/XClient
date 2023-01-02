@@ -9,13 +9,13 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\RedirectMiddleware;
 use JOOservices\XClient\Interfaces\ClientInterface;
 use JOOservices\XClient\Response\Response;
-use Psr\Http\Message\ResponseInterface;
+
 
 class XClient implements ClientInterface
 {
 
     protected Client $client;
-    protected ResponseInterface $response;
+    protected Response $response;
     protected Factory $factory;
     protected array $headers;
     protected string $contentType;
@@ -73,9 +73,9 @@ class XClient implements ClientInterface
     /**
      * Get the Response
      *
-     * @return ResponseInterface
+     * @return Response
      */
-    public function getResponse(): ResponseInterface
+    public function getResponse(): Response
     {
         return $this->response;
     }
@@ -130,9 +130,9 @@ class XClient implements ClientInterface
      *
      * @param  string  $endpoint
      * @param  array  $payload
-     * @return ResponseInterface
+     * @return Response
      */
-    public function get(string $endpoint, array $payload = []): ResponseInterface
+    public function get(string $endpoint, array $payload = []): Response
     {
         return $this->request($endpoint, $payload);
     }
@@ -142,9 +142,9 @@ class XClient implements ClientInterface
      *
      * @param  string  $endpoint
      * @param  array  $payload
-     * @return ResponseInterface
+     * @return Response
      */
-    public function post(string $endpoint, array $payload = []): ResponseInterface
+    public function post(string $endpoint, array $payload = []): Response
     {
         return $this->request($endpoint, $payload, 'POST');
     }
@@ -154,9 +154,9 @@ class XClient implements ClientInterface
      *
      * @param  string  $endpoint
      * @param  array  $payload
-     * @return ResponseInterface
+     * @return Response
      */
-    public function put(string $endpoint, array $payload = []): ResponseInterface
+    public function put(string $endpoint, array $payload = []): Response
     {
         return $this->request($endpoint, $payload, 'PUT');
     }
@@ -166,9 +166,9 @@ class XClient implements ClientInterface
      *
      * @param  string  $endpoint
      * @param  array  $payload
-     * @return ResponseInterface
+     * @return Response
      */
-    public function patch(string $endpoint, array $payload = []): ResponseInterface
+    public function patch(string $endpoint, array $payload = []): Response
     {
         return $this->request($endpoint, $payload, 'PATCH');
     }
@@ -178,9 +178,9 @@ class XClient implements ClientInterface
      *
      * @param  string  $endpoint
      * @param  array  $payload
-     * @return ResponseInterface
+     * @return Response
      */
-    public function delete(string $endpoint, array $payload = []): ResponseInterface
+    public function delete(string $endpoint, array $payload = []): Response
     {
         return $this->request($endpoint, $payload, 'DELETE');
     }
@@ -191,7 +191,7 @@ class XClient implements ClientInterface
      * @param  string  $endpoint
      * @param  array  $payload
      * @param  string  $method
-     * @return ResponseInterface
+     * @return Response
      */
     protected function request(string $endpoint, array $payload = [], string $method = 'GET')
     {
