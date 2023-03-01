@@ -219,6 +219,9 @@ class XClient implements ClientInterface
         $returnResponse = new Response();
         try {
             $response = $this->client->request($method, $endpoint, $requestOptions);
+        } catch (GuzzleException|ClientException) {
+            $returnResponse->isSucceed = false;
+        } finally {
             $returnResponse->reset(
                 $response->getStatusCode(),
                 $response->getHeaders(),
@@ -226,9 +229,6 @@ class XClient implements ClientInterface
                 $response->getProtocolVersion(),
                 $response->getReasonPhrase()
             );
-        } catch (GuzzleException|ClientException) {
-            $returnResponse->isSucceed = false;
-        } finally {
             return $returnResponse;
         }
     }
