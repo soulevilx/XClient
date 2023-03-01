@@ -22,26 +22,18 @@ class XClient implements ClientInterface
 
     public function __construct(protected array $options = [], protected array $requestOptions = [])
     {
-        $this->options = array_merge([
-            'maxRetries' => 3,
-            'delayInSec' => 1,
-            'minErrorCode' => 500,
-            'logger' => [
+        $this->options = [
+            'maxRetries' => 3, 'delayInSec' => 1, 'minErrorCode' => 500, 'logger' => [
                 'instance' => null,
                 'formatter' => null
-            ],
-            'caching' => [
+            ], 'caching' => [
                 'instance' => null
-            ],
-        ], $options);
-        $this->requestOptions = array_merge([
-            'allow_redirects' => RedirectMiddleware::$defaultSettings,
-            'http_errors' => true,
-            'decode_content' => true,
-            'verify' => true,
-            'cookies' => false,
-            'idn_conversion' => false,
-        ], $requestOptions);
+            ], ...$options
+        ];
+        $this->requestOptions = [
+            'allow_redirects' => RedirectMiddleware::$defaultSettings, 'http_errors' => true, 'decode_content' => true,
+            'verify' => true, 'cookies' => false, 'idn_conversion' => false, ...$requestOptions
+        ];
     }
 
     public function init(array $options = [], array $requestOptions = []): self
@@ -217,8 +209,10 @@ class XClient implements ClientInterface
         }
 
         $returnResponse = new Response();
+
         try {
             $response = $this->client->request($method, $endpoint, $requestOptions);
+
             $returnResponse->reset(
                 $response->getStatusCode(),
                 $response->getHeaders(),
@@ -226,7 +220,16 @@ class XClient implements ClientInterface
                 $response->getProtocolVersion(),
                 $response->getReasonPhrase()
             );
-        } catch (GuzzleException|ClientException) {
+        } catch (ClientException $ex) {
+            $returnResponse->reset(
+                $ex->getResponse()->getStatusCode(),
+                $ex->getResponse()->getHeaders(),
+                $ex->getResponse()->getBody(),
+                $ex->getResponse()->getProtocolVersion(),
+                $ex->getResponse()->getReasonPhrase()
+            );
+            $returnResponse->isSucceed = false;
+        } catch (GuzzleException $ex) {
             $returnResponse->reset(0);
             $returnResponse->isSucceed = false;
         } finally {
